@@ -1,0 +1,52 @@
+[
+  {
+    "id": "rigidBody1",
+    "position": [10, 5],
+    "orientation": 0.785,
+    "shapes": [
+      { 
+        "type": "circle", 
+        "radius": 2.0, 
+        "relative_position": [10, 2],
+        "color": [1.0, 0.0, 0.0],
+        "texture": "textures/metal.png",
+        "uv": {
+          "mode": "radial", 
+          "center": [0.5, 0.5]
+        }
+      },
+      { 
+        "type": "rectangle", 
+        "points": [[0.0, 4.0], [4.0, 0.0]],
+        "relative_position": [10, 2],
+        "color": [0.0, 1.0, 0.0],
+        "texture": "textures/wood.png",
+        "uv": {
+          "coords": [
+            [0.0, 0.0],
+            [1.0, 0.0],
+            [1.0, 1.0],
+            [0.0, 1.0] 
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "rigidBody2",
+    "position": [20, 15],
+    "orientation": 0.0,
+    "shapes": [
+      { 
+        "type": "rectangle", 
+        "points": [[0.0, 6.0], [3.0, 0.0]],
+        "color": [0.0, 0.0, 1.0],
+        "texture": "textures/brick.png",
+        "uv": {
+          "mode": "repeat",
+          "scale": [2.0, 3.0]
+        }
+      }
+    ]
+  }
+]
