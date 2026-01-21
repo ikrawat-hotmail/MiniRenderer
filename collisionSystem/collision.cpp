@@ -1,55 +1,30 @@
-# collisionSystem library CMake configuration
-# Note: This is a subdirectory project, output directories are set by parent CMakeLists.txt
+#include "collisionManager.h"
 
-# Compiler flags
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra")
+namespace algo {
+	bool aabbCollisionCheck(Rect& rect1, Rect& rect2) {
+		return !(
+			rect1.maxX < rect2.minX ||
+			rect1.minX > rect2.maxX ||
+			rect1.maxY < rect2.minY ||
+			rect1.minY > rect2.maxY
+		);
+	}
 
-# Header files (now in shared src/include directory)
-set(HEADERS
-    ${CMAKE_CURRENT_SOURCE_DIR}/../include/collision.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/../include/rect.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/../include/vector2f.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/../include/vector3f.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/../include/polygon2D.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/../include/circle.h
-)
+    bool circleCollisionCheck(Circle& c1, Circle& c2) {
+        if (c1.radius <= 0.0f || c2.radius < 0.0f) {
+#ifdef DEBUG_ENABLED
+            std::cout << "ERROR: Invalid circle" << std::endl;
+#endif
+            return false;
+        }
 
-# Source files for the library
-set(LIB_SOURCES
-    collision.cpp
-)
+        float dy = c2.center.y - c1.center.y;
+        float dx = c1.center.y - c1.center.x;
 
-# Test source files
-set(TEST_SOURCES
-    test/main.cpp
-)
+        float sumRadius = c1.radius + c2.radius;
 
-# Create shared library
-add_library(collision SHARED ${LIB_SOURCES} ${HEADERS})
-
-# Set library properties
-set_target_properties(collision PROPERTIES
-    VERSION 1.0.0
-    SOVERSION 1
-    PUBLIC_HEADER "${HEADERS}"
-)
-
-# Include directories for the library (shared include directory)
-target_include_directories(collision PUBLIC
-    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/../include>
-    $<INSTALL_INTERFACE:include>
-)
-
-# Create executable for testing
-add_executable(collision_test ${TEST_SOURCES})
-
-# Link test executable with the library
-target_link_libraries(collision_test PRIVATE collision)
-target_include_directories(collision_test PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/../include)
-
-# Installation rules (optional)
-install(TARGETS collision collision_test
-    LIBRARY DESTINATION lib
-    RUNTIME DESTINATION bin
-    PUBLIC_HEADER DESTINATION include/collisionSystem
-)
+        if ((sumRadius * sumRadius) > (dy*dy + dx*dx))
+            return true;
+        return false;
+    }
+}
