@@ -1,0 +1,17 @@
+Separate out collider and actual polygon geometery
+
+Update modelLoader.cpp to parse the collision boxes as well from json
+
+
+workflow be like-
+
+1. decide on directory for a scene
+2. load rigidbodies
+3. load colliders for each rigid body (go side by side in parser)
+4. setup opengl pipeline
+5. for each rigid body go internally and form an array of vertices
+6. load these array in VBO and VAO
+7. run render loop
+    8. on each sync signal
+    9. animate rigid body
+    10. detect collider
