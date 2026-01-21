@@ -1,6 +1,6 @@
 #include <iostream>
 #include <vector>
-#include "collision.h"
+#include "collisionManager.h"
 #include "rect.h"
 #include "vector2f.h"
 
