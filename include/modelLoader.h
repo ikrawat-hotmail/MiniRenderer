@@ -11,6 +11,7 @@
 #include "vector2f.h"
 #include "vector3f.h"
 #include "polygon2D.h"
+#include "collider2D.h"
 #include "sj.h"
 
 #define FILEPATH "../../resources/"
@@ -30,10 +31,6 @@ private:
                     std::vector<std::shared_ptr<RigidBody2D>>& rigidBodyArr,
                     std::string jsonStr);
 
-    int loadModels(
-        std::vector<std::shared_ptr<RigidBody2D>>& rigidBodyArr,
-        std::string path = FILEPATH);
-
     bool keyEquals(sj_Value key, const char* str);
 
     float extractNumber(sj_Value val);
@@ -45,12 +42,14 @@ private:
     Vec3f parseVec3f(sj_Reader* reader, sj_Value arrayVal);
 
 public:
+    int loadModels(
+        std::vector<std::shared_ptr<RigidBody2D>>& rigidBodyArr,
+        std::string path = FILEPATH);
+    
     static ModelLoader& getInstance() {
         static ModelLoader modelloader;
         return modelloader;
     }
-
-    int init(std::vector<std::shared_ptr<RigidBody2D>>& rigidBodyArr);
 };
 
 #endif
